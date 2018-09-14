@@ -1,0 +1,79 @@
+[
+  {
+    "title": "Blood of Elves",
+    "author": {
+      "firstName": "Andrzej",
+      "lastName": "Sapkowski"
+    },
+    "isbn": "9788375780741",
+    "publicationYear": 1994,
+    "pages": 320,
+    "price": 24.99
+  },
+  {
+    "title": "Call of Cthulu",
+    "author": {
+      "firstName": "H.P.",
+      "lastName": "Lovecraft"
+    },
+    "isbn": "9781974267767",
+    "publicationYear": 1928,
+    "pages": 52,
+    "price": 16.99
+  },
+  {
+    "title": "Pet Sematary",
+    "author": {
+      "firstName": "Stephen",
+      "lastName": "King"
+    },
+    "isbn": "9789544090838",
+    "publicationYear": 1983,
+    "pages": 374,
+    "price": 29.99
+  },
+  {
+    "title": "The Dunwich Horror",
+    "author": {
+      "firstName": "H.P.",
+      "lastName": "Lovecraft"
+    },
+    "isbn": "9781544747767",
+    "publicationYear": 1928,
+    "pages": 70,
+    "price": 14.99
+  },
+  {
+    "title": "The Last Wish",
+    "author": {
+      "firstName": "Andrzej",
+      "lastName": "Sapkowski"
+    },
+    "isbn": "9788375780635",
+    "publicationYear": 1993,
+    "pages": 288,
+    "price": 24.99
+  },
+  {
+    "title": "Carrie",
+    "author": {
+      "firstName": "Stephen",
+      "lastName": "King"
+    },
+    "isbn": "9781417580538",
+    "publicationYear": 1974,
+    "pages": 199,
+    "price": 27.99
+  },
+  {
+    "title": "The Tower of the Swallow",
+    "author": {
+      "firstName": "Andrzej",
+      "lastName": "Sapkowski"
+    },
+    "isbn": "9781478965008",
+    "publicationYear": 1997,
+    "pages": 464,
+    "price": 24.99
+  }
+]
