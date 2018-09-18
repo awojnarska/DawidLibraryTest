@@ -20,8 +20,7 @@ public class GetBookByISBN {
 
     @DataProvider(name = "WrongParameters")
     public Object[] wrongParam() {
-        return new Object[]{"12345", "123", "abcdergh"
-        };
+        return new Object[]{"12345", "123", "abcdergh"};
     }
 
 
