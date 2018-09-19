@@ -1,4 +1,4 @@
-package books;
+package com.gd.intern.dawidlibrarytest.test.books;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -25,14 +25,11 @@ public class GetBookByISBN {
 
 
     @Test(dataProvider = "TitleByISBN")
-    public void getBookByISBN_statusCodeTest(String isbn) {
-        given().pathParam("isbn", isbn).when().get("http://localhost:8080/virtual-library-ws/books/{isbn}").then().statusCode(200);
-    }
-
-    @Test(dataProvider = "TitleByISBN")
-    public void getBookByISBN_correctTitle(String isbn, String title) {
+    public void getBookByISBN_statusCodeTest(String isbn, String title) {
         given().pathParam("isbn", isbn).when().get("http://localhost:8080/virtual-library-ws/books/{isbn}")
-                .then().body("title", equalTo(title));
+                .then()
+                .statusCode(200)
+                .body("title", equalTo(title));
     }
 
     @Test(dataProvider = "WrongParameters")

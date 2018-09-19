@@ -1,4 +1,4 @@
-package users;
+package com.gd.intern.dawidlibrarytest.test.users;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -10,6 +10,8 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 
 public class FavouriteGenres {
+
+    //todo tworzyć specjalnie usera na potrzeby testu, sprawdzić tych userów którzy istnieją w bazie od początku
 
     @DataProvider(name = "username")
     public Object[] username() {

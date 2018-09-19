@@ -1,4 +1,4 @@
-package users;
+package com.gd.intern.dawidlibrarytest.test.users;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -19,7 +19,7 @@ public class GetUserById {
 
     @DataProvider(name = "incorrectPublicUserId")
     public Object[] incorrectPublicUserId() {
-        return new Object[]{"8CnHLxNh06ZfmtfPBoV1c6slahnjkl", "aaabavahbahjkjabjhadhjkashkasjh", "ghjhbacjhbcjsahcjajhcbacjsh"};
+        return new Object[]{"8CnHLxNh06ZfmtfPBoV1cf6slahnjkl", "aaabavahbahjkjabjhadhjkashkasjh", "ghjhbacjhbcjsahcjajhcbacjsh"};
     }
 
 

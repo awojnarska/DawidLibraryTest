@@ -1,9 +1,11 @@
-package books;
+package com.gd.intern.dawidlibrarytest.test.books;
 
+import io.restassured.http.ContentType;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.core.Is.is;
 
 public class FindBookByTitle {
 
@@ -31,16 +33,30 @@ public class FindBookByTitle {
 
     @Test(dataProvider = "properFragmentOfTitle")
     public void findBookByTitle_statusCodeTest(String find) {
-        given().param("find", find).param("page", 0).param("limit", 10).when().get("http://localhost:8080/virtual-library-ws/books/").then().statusCode(200);
+        given().param("find", find).param("page", 0).param("limit", 10)
+                .when().get("http://localhost:8080/virtual-library-ws/books/")
+                .then().statusCode(200);
     }
+
 
     @Test(dataProvider = "properFragmentCaseSensitive")
     public void findBookByTitle_properFragmentCaseSensitiveStatusCodeTest(String find) {
-        given().param("find", find).param("page", 0).param("limit", 10).when().get("http://localhost:8080/virtual-library-ws/books/").then().statusCode(200);
+        given().param("find", find).param("page", 0).param("limit", 10)
+                .when().get("http://localhost:8080/virtual-library-ws/books/").then().statusCode(200);
     }
 
     @Test(dataProvider = "incorrectFragmentOfTitle")
     public void findBookByTitle_incorrectParamStatusCodeTest(String find) {
-        given().param("find", find).param("page", 0).param("limit", 10).when().get("http://localhost:8080/virtual-library-ws/books/").then().statusCode(404);
+        given().param("find", find).param("page", 0).param("limit", 10)
+                .when().get("http://localhost:8080/virtual-library-ws/books/").then().statusCode(404);
+    }
+
+
+    @Test(dataProvider = "incorrectFragmentOfTitle")
+    public void findBookByTitle_incorrectFragmentCountElements(String find) {
+        given().param("find", find).param("page", 0).param("limit", 10)
+                .when().get("http://localhost:8080/virtual-library-ws/books/")
+                .then().contentType(ContentType.JSON).
+                body("list.size()", is(0));
     }
 }

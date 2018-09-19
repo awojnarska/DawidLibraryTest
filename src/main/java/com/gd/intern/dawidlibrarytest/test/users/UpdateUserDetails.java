@@ -1,4 +1,4 @@
-package users;
+package com.gd.intern.dawidlibrarytest.test.users;
 
 import com.gd.intern.dawidlibrarytest.model.User;
 import org.testng.annotations.BeforeClass;
@@ -12,6 +12,9 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 public class UpdateUserDetails {
+    //todo wartości, których nie można dodać
+    //todo publicuserid, który nie istnieje
+    //todo poprawić, że pierwsze tworzę usera, a potem go update, wyjść z założenia, że tworze usera do testów
 
     @DataProvider(name = "publicUserId")
     public Object[][] publicUserId() {
@@ -24,7 +27,7 @@ public class UpdateUserDetails {
 
 
     @Test
-    public void updateUser(){
+    public void updateUser() {
 
         Map<String, Object> userUpdate = new HashMap<>();
         userUpdate.put("age", 30);
@@ -46,8 +49,7 @@ public class UpdateUserDetails {
                         "accountBalance", equalTo(userUpdate.get("accountBalance")));
     }
 
-    //todo wartości, których nie można dodać
-    //todo publicuserid, który nie istnieje
+
 
 
 }
