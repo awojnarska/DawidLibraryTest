@@ -21,7 +21,6 @@ public class UpdateUserDetails {
         return new Object[][]{
                 {"8CnHLxNh06ZfmtfPBoV1c6slRU0Dk3", "ilya"},
                 {"MmVhfTO044WdTacJWXbqWkHbuuwJxT", "dgabka"},
-                {"FoLCMTWJrNjObVkIM5zGgquNb5LI9b", "string"}
         };
     }
 

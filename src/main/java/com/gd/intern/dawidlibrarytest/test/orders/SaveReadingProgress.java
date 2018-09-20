@@ -9,12 +9,18 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.config.JsonConfig.jsonConfig;
+import static io.restassured.path.json.config.JsonPathConfig.NumberReturnType.DOUBLE;
+import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.equalTo;
 
 public class SaveReadingProgress {
+
 
     @BeforeClass
     public void setup() {
         RestAssured.baseURI = "http://localhost:8080/virtual-library-ws/orders/read";
+        RestAssured.config = RestAssured.config().jsonConfig(jsonConfig().numberReturnType(DOUBLE));
 
         //create users
         CreateUserDB.createUser("Test", "Order - Read", "testorderread1@mail.com",
@@ -55,7 +61,10 @@ public class SaveReadingProgress {
         given().queryParam("no", pages).contentType("application/json").body(order)
                 .when().put()
                 .then()
-                .statusCode(200);
+                .statusCode(200)
+        .body("bookRest.isbn", equalTo(isbn),
+               "userRest.username", equalTo(username),
+                "readingProgress", closeTo((((double)pages/464)*100), 0.01d));
     }
 
     @Test(dataProvider = "incorrectData")

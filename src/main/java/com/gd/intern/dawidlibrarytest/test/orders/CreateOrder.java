@@ -8,12 +8,19 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.config.JsonConfig.jsonConfig;
+import static io.restassured.path.json.config.JsonPathConfig.NumberReturnType.DOUBLE;
+import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.equalTo;
 
 public class CreateOrder {
+
+    //todo check if accountBalance is change, is isbn good, and username good
 
     @BeforeClass
     public void setup() {
         RestAssured.baseURI = "http://localhost:8080/virtual-library-ws/orders";
+        RestAssured.config = RestAssured.config().jsonConfig(jsonConfig().numberReturnType(DOUBLE));
 
         //create users
         CreateUserDB.createUser("Test", "Order", "testorder1@meil.com",
@@ -24,24 +31,44 @@ public class CreateOrder {
 
 
 
-    @DataProvider(name = "postOrder")
+    @DataProvider(name = "postOrderIncorrect")
     public Object[][] createOrderData() {
         return new Object[][]{
                 {"9781974267767", "dgabka", 400}, //existOrder
                 {"9788375780741", "ilya", 400}, //existOrder
-                {"9781974267767", "testorder1", 200}, //correctOrder
                 {"9781974267767", "testorder2", 400}, //notEnoughMoney
                 {"9781478965008", "testorderr", 404}, //wrong username
-                {"9781478965025", "testorder1", 404}, //wrong ISBN
+                {"9781478965025", "testorder1", 404}, //wrong isbn
                 {"9781478965008", "testorderr", 404}, //wrong isbn & username
         };
     }
 
-    @Test(dataProvider = "postOrder")
-    public void postOrder_statusCode(String isbn, String username, int status) {
+    @DataProvider(name = "postOrderCorrect")
+    public Object[][] createOrderDataCorrect() {
+        return new Object[][]{
+                {"9781974267767", "testorder1", 16.99, 200}, //correctOrder
+        };
+    }
+
+    @Test(dataProvider = "postOrderIncorrect")
+    public void postOrder_statusCodeIncorrect(String isbn, String username, int status) {
         given().contentType("application/json").body(new Order(isbn, username))
                 .when().post()
                 .then().statusCode(status);
     }
+
+    @Test(dataProvider = "postOrderCorrect")
+    public void postOrder_CorrectValues(String isbn, String username, double price, int status) {
+        given().contentType("application/json").body(new Order(isbn, username))
+                .when().post()
+                .then().statusCode(status)
+                .body("bookRest.isbn", equalTo(isbn),
+                        "userRest.username", equalTo(username),
+                        "userRest.accountBalance", closeTo(3000-price, 0.01));
+    }
+
+
+
+
 
 }

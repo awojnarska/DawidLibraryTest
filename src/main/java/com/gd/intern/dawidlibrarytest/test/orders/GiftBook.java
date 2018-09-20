@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.equalTo;
 
 public class GiftBook {
 
@@ -31,24 +33,41 @@ public class GiftBook {
         CreateOrderDB.createOrder("9781974267767", "testordergift2");
 
     }
-
     @DataProvider(name = "giftBook")
     public Object[][] giftBookData() {
         return new Object[][]{
                 {"9781478965008", "testordergift1", "testordergift2",  200}, //good
+        };
+    }
+
+    @DataProvider(name = "giftBookIncorrect")
+    public Object[][] giftBookDataIncorrect() {
+        return new Object[][]{
                 {"9788375780741", "testordergift1", "testordergift2",  404}, //user who give don't have it
                 {"9781974267767", "testordergift1", "testordergift2",  400}, //user to be gifted have book
                 {"9781974267767", "testordergift2", "testordergift2",  400}, //give book to yourself
-                {"9781974267761", "testordergift2", "testordergift1",  404}, //book don't exist //todo wrong message?
+                {"9781974267761", "testordergift2", "testordergift1",  404}, //book don't exist
                 {"978197426776111111", "testordergift2", "testordergift1",  400}, //ISBN too long
                 {"9781974267767", "testorderg", "testordergift1",  404}, //username don't exist
-
         };
     }
 
 
+
+
     @Test(dataProvider = "giftBook")
     public void giftBookTest(String isbn, String user1, String user2, int status) {
+        Order gift = new Order(isbn, user1);
+        given().queryParam("to", user2).contentType("application/json").body(gift)
+                .when().post()
+                .then()
+                .statusCode(status)
+        .body("bookRest.isbn", equalTo(isbn),
+                "userRest.username", equalTo(user2));
+    }
+
+    @Test(dataProvider = "giftBookIncorrect")
+    public void giftBookTest_incorrectValues(String isbn, String user1, String user2, int status) {
         Order gift = new Order(isbn, user1);
         given().queryParam("to", user2).contentType("application/json").body(gift)
                 .when().post()
