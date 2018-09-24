@@ -15,7 +15,6 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class CreateOrder {
 
-    //todo check if accountBalance is change, is isbn good, and username good
 
     @BeforeClass
     public void setup() {

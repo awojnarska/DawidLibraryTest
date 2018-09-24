@@ -58,7 +58,7 @@ paths:
     get:
       tags:
       - books
-      summary: Find book by title
+      summary: Find book.json by title
       operationId: findByTitleUsingGET
       parameters:
       - name: find
@@ -95,12 +95,12 @@ paths:
     get:
       tags:
       - books
-      summary: Get book
+      summary: Get book.json
       operationId: getBookUsingGET
       parameters:
       - name: isbn
         in: path
-        description: ISBN of a book
+        description: ISBN of a book.json
         required: true
         type: string
       responses:
@@ -144,7 +144,7 @@ paths:
     post:
       tags:
       - orders
-      summary: Gift book
+      summary: Gift book.json
       operationId: giftOrderUsingPOST
       parameters:
       - in: body
