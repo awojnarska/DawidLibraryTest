@@ -1,4 +1,4 @@
-package com.gd.intern.dawidlibrarytest.test.orders;
+package orders;
 
 import com.gd.intern.dawidlibrarytest.model.Order;
 import com.gd.intern.dawidlibrarytest.util.CreateUserDB;
@@ -15,7 +15,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.equalTo;
 
-public class GiftBook {
+public class GiftBookTest {
 
     @BeforeClass
     public void setup() {

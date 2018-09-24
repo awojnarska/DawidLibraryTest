@@ -1,4 +1,4 @@
-package com.gd.intern.dawidlibrarytest.test.users;
+package users;
 
 import com.gd.intern.dawidlibrarytest.model.User;
 import com.gd.intern.dawidlibrarytest.model.UserBasic;
@@ -7,13 +7,14 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 
-public class CreateUser {
-//todo nie wpisywać tylko jedną rzecz
-
+public class CreateUserTest {
 
     @BeforeClass
     public void setup() {
@@ -23,22 +24,14 @@ public class CreateUser {
     @DataProvider(name = "userData")
     public Object[] userData() {
         return new Object[]{
-                new User("Test", "User", "usertest@mail.com", "usertest", "FEMALE", "password", 10, 100.0),
+                new User("Test", "User", "usertest1@mail.com", "usertest", "FEMALE", "password", 10, 100.0),
         };
     }
 
     @DataProvider(name = "userBasicData")
     public Object[] userBasicData() {
         return new Object[]{
-                new UserBasic("usertest@mail.com", "testuser", "password")
-        };
-    }
-
-    @DataProvider(name = "userExist")
-    public Object[] userExist() {
-        return new Object[]{
-                new UserBasic("dgabka@mail.com", "gabka", "password"), //email exist
-                new UserBasic("testwrongdata2@mail.com", "ilya", "password") //username exist
+                new UserBasic("usertest2@mail.com", "testuser", "password")
         };
     }
 
@@ -46,12 +39,16 @@ public class CreateUser {
     @DataProvider(name = "wrongBasicUserData")
     public Object[] userBasicData_wrongParameters() {
         return new Object[]{
+                new UserBasic("dgbaka@email.com", "gabka", "password"), //email exist
+                new UserBasic("testwrongdata2@mail.com", "ilya", "password"), //username exist
                 new UserBasic("testwrongdata3@mail.com", "il", "password"), //username short
                 new UserBasic("testwrongdata4@mail.com", "ilaaawwertyuwertyuiolkjhgfxcvbnmnxncjsbvhjsdbjhbdsjbsdvhjbfvsdb", "password"), //username long
                 new UserBasic("testwrongdata4", "testmail", "password"), //wrong mail
                 new UserBasic("testwrongdata4.com", "testmail2", "password"), //wrong mail
                 new UserBasic("testwrongdata4adsdfqwertyuiopsdygcbjdvbhjsbvhjdbsvbsahjvbjhasbvjhasbjvhabajvbsajhbsvajhasv@mail.com", "testmail3", "password"), //wrong mail
-           };
+                new UserBasic("testwrongdata5@mail.com", "testmail5", "pas"), //wrong password
+                new UserBasic("testwrongdata5@mail.com", "testmail5", "pasqwertyuiopzcvhjbsjhbshbbjabjhasjhasjhcbsajhcbasjhacsbhjasbsacjhbscjasbjascbcjashbacsjbcsavsjhbvsjhsbhsabvbssvhabsvakhbahjksbfsakhbfskjbfskjfs"), //wrong password
+        };
     }
 
     @DataProvider(name = "wrongUserData")
@@ -66,12 +63,11 @@ public class CreateUser {
     }
 
 
-
     @Test(dataProvider = "userData")
     public void createUser_test(User user) {
         given().contentType("application/json").body(user).when().post()
                 .then().statusCode(200)
-                .body("accountBalance", equalTo((float)user.getAccountBalance()),
+                .body("accountBalance", equalTo((float) user.getAccountBalance()),
                         "age", equalTo(user.getAge()),
                         "email", equalTo(user.getEmail()),
                         "firstName", equalTo(user.getFirstName()),
@@ -94,12 +90,6 @@ public class CreateUser {
     }
 
 
-    @Test(dataProvider = "userExist")
-    public void createUser_userExist(User user) {
-        given().contentType("application/json").body(user).when().post()
-                .then().statusCode(400);
-    }
-
     @Test(dataProvider = "wrongBasicUserData")
     public void createUser_wrongBasicUserData(UserBasic user) {
         given().contentType("application/json").body(user).when().post()
@@ -110,6 +100,24 @@ public class CreateUser {
     public void createUser_wrongUserData(User user) {
         given().contentType("application/json").body(user).when().post()
                 .then().statusCode(400);
+    }
+
+    @Test
+    public void createUser_oneParameterUsername() {
+        Map<String, Object> createUser = new HashMap<>();
+        createUser.put("username", "usernameTest");
+        given().contentType("application/json").body(createUser).when().post()
+                .then().statusCode(400);
+
+    }
+
+    @Test
+    public void createUser_oneParameterEmail() {
+        Map<String, Object> createUser = new HashMap<>();
+        createUser.put("email", "usernametest@mail.com");
+        given().contentType("application/json").body(createUser).when().post()
+                .then().statusCode(400);
+
     }
 
 

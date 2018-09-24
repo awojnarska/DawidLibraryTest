@@ -1,4 +1,4 @@
-package com.gd.intern.dawidlibrarytest.test.orders;
+package orders;
 
 import com.gd.intern.dawidlibrarytest.model.Order;
 import com.gd.intern.dawidlibrarytest.util.CreateOrderDB;
@@ -14,7 +14,7 @@ import static io.restassured.path.json.config.JsonPathConfig.NumberReturnType.DO
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.equalTo;
 
-public class SaveReadingProgress {
+public class SaveReadingProgressTest {
 
 
     @BeforeClass

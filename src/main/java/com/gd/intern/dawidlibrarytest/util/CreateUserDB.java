@@ -13,4 +13,13 @@ public class CreateUserDB {
         given().contentType("application/json").body(user).when().post("http://localhost:8080/virtual-library-ws/users");
 
     }
+
+    public static Object createUserAndGetId(String firstName, String lastName, String email, String username, String gender, String password, int age, double accountBalance) {
+
+        User user = new User(firstName, lastName, email, username, gender, password, age, accountBalance);
+        return given().contentType("application/json").body(user).when().post("http://localhost:8080/virtual-library-ws/users").jsonPath().get("publicUserId");
+
+    }
+
+
 }

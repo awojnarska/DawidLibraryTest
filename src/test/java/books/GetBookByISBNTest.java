@@ -1,4 +1,4 @@
-package com.gd.intern.dawidlibrarytest.test.books;
+package books;
 
 import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.IsEqual.equalTo;
 
-public class GetBookByISBN {
+public class GetBookByISBNTest {
 
     @BeforeClass
     public void setup() {

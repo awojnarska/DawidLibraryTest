@@ -1,4 +1,4 @@
-package com.gd.intern.dawidlibrarytest.test.books;
+package books;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.Is.is;
 
-public class FindBookByTitle {
+public class FindBookByTitleTest {
 
     @BeforeClass
     public void setup() {
@@ -53,18 +53,12 @@ public class FindBookByTitle {
                 .when().get().then().statusCode(200);
     }
 
-    @Test(dataProvider = "incorrectFragmentOfTitle")
-    public void findBookByTitle_incorrectParamStatusCodeTest(String find) {
-        given().param("find", find).param("page", 0).param("limit", 10)
-                .when().get().then().statusCode(404);
-    }
-
 
     @Test(dataProvider = "incorrectFragmentOfTitle")
     public void findBookByTitle_incorrectFragmentCountElements(String find) {
         given().param("find", find).param("page", 0).param("limit", 10)
                 .when().get()
-                .then().contentType(ContentType.JSON).
-                body("list.size()", is(0));
+                .then().contentType(ContentType.JSON).statusCode(200)
+                .body("list.size()", is(0));
     }
 }

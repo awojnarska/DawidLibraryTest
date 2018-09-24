@@ -1,4 +1,4 @@
-package com.gd.intern.dawidlibrarytest.test.books;
+package books;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -10,7 +10,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.Is.is;
 
 
-public class GetAllBooks {
+public class GetAllBooksTest {
 
 
     @BeforeClass
