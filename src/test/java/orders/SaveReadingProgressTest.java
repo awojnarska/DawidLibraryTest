@@ -3,6 +3,7 @@ package orders;
 import com.gd.intern.dawidlibrarytest.model.Order;
 import com.gd.intern.dawidlibrarytest.util.CreateOrderDB;
 import com.gd.intern.dawidlibrarytest.util.CreateUserDB;
+import io.qameta.allure.Feature;
 import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -14,6 +15,7 @@ import static io.restassured.path.json.config.JsonPathConfig.NumberReturnType.DO
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.equalTo;
 
+@Feature("Save reading progress")
 public class SaveReadingProgressTest {
 
 
@@ -55,7 +57,7 @@ public class SaveReadingProgressTest {
     }
 
 
-    @Test(dataProvider = "properData")
+    @Test(dataProvider = "properData", description="Save reading progress with correct data")
     public void saveReadingProgress_correctPageNumber(String isbn, String username, int pages) {
         Order order = new Order(isbn, username);
         given().queryParam("no", pages).contentType("application/json").body(order)
@@ -67,7 +69,7 @@ public class SaveReadingProgressTest {
                 "readingProgress", closeTo((((double)pages/464)*100), 0.01d));
     }
 
-    @Test(dataProvider = "incorrectData")
+    @Test(dataProvider = "incorrectData", description="Save reading progress with incorrect data")
     public void saveReadingProgress_incorrectData(String isbn, String username, int pages, int status) {
         Order order = new Order(isbn, username);
         given().queryParam("no", pages).contentType("application/json").body(order)

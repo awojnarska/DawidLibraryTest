@@ -1,5 +1,7 @@
 package books;
 
+import io.qameta.allure.Feature;
+import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -8,6 +10,7 @@ import org.testng.annotations.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.IsEqual.equalTo;
 
+@Feature("Get book by isbn")
 public class GetBookByISBNTest {
 
     @BeforeClass
@@ -31,7 +34,7 @@ public class GetBookByISBNTest {
     }
 
 
-    @Test(dataProvider = "TitleByISBN")
+    @Test(dataProvider = "TitleByISBN", description = "Check status code and the correctness of title parameter")
     public void getBookByISBN_statusCodeTest(String isbn, String title) {
         given().pathParam("isbn", isbn).when().get("{isbn}")
                 .then()
@@ -39,7 +42,8 @@ public class GetBookByISBNTest {
                 .body("title", equalTo(title));
     }
 
-    @Test(dataProvider = "WrongParameters")
+
+    @Test(dataProvider = "WrongParameters", description = "Check status code, when isbn not exist")
     public void getBookByISBN_wrongParam(String isbn) {
         given().pathParam("isbn", isbn).when().get("{isbn}").then().statusCode(404);
     }

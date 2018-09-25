@@ -3,6 +3,7 @@ package orders;
 import com.gd.intern.dawidlibrarytest.model.Order;
 import com.gd.intern.dawidlibrarytest.util.CreateUserDB;
 import com.gd.intern.dawidlibrarytest.util.CreateOrderDB;
+import io.qameta.allure.Feature;
 import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -12,9 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.equalTo;
 
+@Feature("Gift Book")
 public class GiftBookTest {
 
     @BeforeClass
@@ -55,7 +56,7 @@ public class GiftBookTest {
 
 
 
-    @Test(dataProvider = "giftBook")
+    @Test(dataProvider = "giftBook", description="Gift book test with correct data")
     public void giftBookTest(String isbn, String user1, String user2, int status) {
         Order gift = new Order(isbn, user1);
         given().queryParam("to", user2).contentType("application/json").body(gift)
@@ -66,7 +67,7 @@ public class GiftBookTest {
                 "userRest.username", equalTo(user2));
     }
 
-    @Test(dataProvider = "giftBookIncorrect")
+    @Test(dataProvider = "giftBookIncorrect", description="Gift book test with incorrect values")
     public void giftBookTest_incorrectValues(String isbn, String user1, String user2, int status) {
         Order gift = new Order(isbn, user1);
         given().queryParam("to", user2).contentType("application/json").body(gift)
@@ -74,7 +75,7 @@ public class GiftBookTest {
                 .then().statusCode(status);
     }
 
-    @Test
+    @Test(description = "Check status code, when username is not added in the body")
     public void giftBookTest_withoutUsername() {
         Map<String, String> gift = new HashMap<>();
         gift.put("isbn", "9781974267767");
@@ -83,7 +84,7 @@ public class GiftBookTest {
                 .then().statusCode(400);
     }
 
-    @Test
+    @Test(description = "Check status code, when isbn is not added in the body")
     public void giftBookTest_withoutISBN() {
         Map<String, String> gift = new HashMap<>();
         gift.put("username", "testordergift2");

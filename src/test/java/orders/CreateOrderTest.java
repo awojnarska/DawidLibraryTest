@@ -2,6 +2,7 @@ package orders;
 
 import com.gd.intern.dawidlibrarytest.model.Order;
 import com.gd.intern.dawidlibrarytest.util.CreateUserDB;
+import io.qameta.allure.Feature;
 import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -13,6 +14,7 @@ import static io.restassured.path.json.config.JsonPathConfig.NumberReturnType.DO
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.equalTo;
 
+@Feature("Create Order")
 public class CreateOrderTest {
 
 
@@ -27,7 +29,6 @@ public class CreateOrderTest {
         CreateUserDB.createUser("Test", "Order", "testorder2@meil.com",
                 "testorder2", "RATHER_NOT_SAY", "password", 20, 10.00);
     }
-
 
 
     @DataProvider(name = "postOrderIncorrect")
@@ -49,25 +50,22 @@ public class CreateOrderTest {
         };
     }
 
-    @Test(dataProvider = "postOrderIncorrect")
+    @Test(dataProvider = "postOrderIncorrect", description = "Check status code, when some parameters are wrong")
     public void postOrder_statusCodeIncorrect(String isbn, String username, int status) {
         given().contentType("application/json").body(new Order(isbn, username))
                 .when().post()
                 .then().statusCode(status);
     }
 
-    @Test(dataProvider = "postOrderCorrect")
+    @Test(dataProvider = "postOrderCorrect", description = "Check status code with proper parameters")
     public void postOrder_CorrectValues(String isbn, String username, double price, int status) {
         given().contentType("application/json").body(new Order(isbn, username))
                 .when().post()
                 .then().statusCode(status)
                 .body("bookRest.isbn", equalTo(isbn),
                         "userRest.username", equalTo(username),
-                        "userRest.accountBalance", closeTo(3000-price, 0.01));
+                        "userRest.accountBalance", closeTo(3000 - price, 0.01));
     }
-
-
-
 
 
 }

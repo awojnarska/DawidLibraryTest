@@ -1,5 +1,6 @@
 package books;
 
+import io.qameta.allure.Feature;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.testng.annotations.BeforeClass;
@@ -9,7 +10,10 @@ import org.testng.annotations.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.Is.is;
 
+@Feature("Find Book by title")
 public class FindBookByTitleTest {
+
+    //todo spraedzić czy są takie fragmenty
 
     @BeforeClass
     public void setup() {
@@ -39,7 +43,7 @@ public class FindBookByTitleTest {
     }
 
 
-    @Test(dataProvider = "properFragmentOfTitle")
+    @Test(dataProvider = "properFragmentOfTitle", description = "Check status code, when fragment of title exist")
     public void findBookByTitle_statusCodeTest(String find) {
         given().param("find", find).param("page", 0).param("limit", 10)
                 .when().get()
@@ -47,14 +51,14 @@ public class FindBookByTitleTest {
     }
 
 
-    @Test(dataProvider = "properFragmentCaseSensitive")
+    @Test(dataProvider = "properFragmentCaseSensitive", description = "Check status code, when given fragment is case sensitive")
     public void findBookByTitle_properFragmentCaseSensitiveStatusCodeTest(String find) {
         given().param("find", find).param("page", 0).param("limit", 10)
                 .when().get().then().statusCode(200);
     }
 
 
-    @Test(dataProvider = "incorrectFragmentOfTitle")
+    @Test(dataProvider = "incorrectFragmentOfTitle", description = "Count elements, when given fragment is not on the list")
     public void findBookByTitle_incorrectFragmentCountElements(String find) {
         given().param("find", find).param("page", 0).param("limit", 10)
                 .when().get()

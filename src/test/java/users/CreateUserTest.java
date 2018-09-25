@@ -2,6 +2,8 @@ package users;
 
 import com.gd.intern.dawidlibrarytest.model.User;
 import com.gd.intern.dawidlibrarytest.model.UserBasic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -11,14 +13,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.config.JsonConfig.jsonConfig;
+import static io.restassured.path.json.config.JsonPathConfig.NumberReturnType.DOUBLE;
 import static org.hamcrest.CoreMatchers.equalTo;
 
-
+@Feature("Create User")
 public class CreateUserTest {
 
     @BeforeClass
     public void setup() {
         RestAssured.baseURI = "http://localhost:8080/virtual-library-ws/users";
+        RestAssured.config = RestAssured.config().jsonConfig(jsonConfig().numberReturnType(DOUBLE));
     }
 
     @DataProvider(name = "userData")
@@ -47,7 +52,7 @@ public class CreateUserTest {
                 new UserBasic("testwrongdata4.com", "testmail2", "password"), //wrong mail
                 new UserBasic("testwrongdata4adsdfqwertyuiopsdygcbjdvbhjsbvhjdbsvbsahjvbjhasbvjhasbjvhabajvbsajhbsvajhasv@mail.com", "testmail3", "password"), //wrong mail
                 new UserBasic("testwrongdata5@mail.com", "testmail5", "pas"), //wrong password
-                new UserBasic("testwrongdata5@mail.com", "testmail5", "pasqwertyuiopzcvhjbsjhbshbbjabjhasjhasjhcbsajhcbasjhacsbhjasbsacjhbscjasbjascbcjashbacsjbcsavsjhbvsjhsbhsabvbssvhabsvakhbahjksbfsakhbfskjbfskjfs"), //wrong password
+                new UserBasic("testwrongdata5@mail.com", "testmail5", "pas pkjkj"), //wrong password
         };
     }
 
@@ -63,11 +68,11 @@ public class CreateUserTest {
     }
 
 
-    @Test(dataProvider = "userData")
+    @Test(dataProvider = "userData", description="Create user with correct data")
     public void createUser_test(User user) {
         given().contentType("application/json").body(user).when().post()
                 .then().statusCode(200)
-                .body("accountBalance", equalTo((float) user.getAccountBalance()),
+                .body("accountBalance", equalTo(user.getAccountBalance()),
                         "age", equalTo(user.getAge()),
                         "email", equalTo(user.getEmail()),
                         "firstName", equalTo(user.getFirstName()),
@@ -76,11 +81,11 @@ public class CreateUserTest {
                         "username", equalTo(user.getUsername()));
     }
 
-    @Test(dataProvider = "userBasicData")
+    @Test(dataProvider = "userBasicData", description="Create user with correct data")
     public void createUser_test(UserBasic user) {
         given().contentType("application/json").body(user).when().post()
                 .then().statusCode(200)
-                .body("accountBalance", equalTo(0.0f),
+                .body("accountBalance", equalTo(0.0),
                         "age", equalTo(0),
                         "email", equalTo(user.getEmail()),
                         "firstName", equalTo(null),
@@ -90,19 +95,19 @@ public class CreateUserTest {
     }
 
 
-    @Test(dataProvider = "wrongBasicUserData")
-    public void createUser_wrongBasicUserData(UserBasic user) {
+    @Test(dataProvider = "wrongBasicUserData", description="Create user with incorrect data")
+    public void createUser_wrongUserData(UserBasic user) {
         given().contentType("application/json").body(user).when().post()
                 .then().statusCode(400);
     }
 
-    @Test(dataProvider = "wrongUserData")
+    @Test(dataProvider = "wrongUserData", description="Create user with incorrect data")
     public void createUser_wrongUserData(User user) {
         given().contentType("application/json").body(user).when().post()
                 .then().statusCode(400);
     }
 
-    @Test
+    @Test(description="Create user using only username")
     public void createUser_oneParameterUsername() {
         Map<String, Object> createUser = new HashMap<>();
         createUser.put("username", "usernameTest");
@@ -111,7 +116,7 @@ public class CreateUserTest {
 
     }
 
-    @Test
+    @Test(description="Create user using only email")
     public void createUser_oneParameterEmail() {
         Map<String, Object> createUser = new HashMap<>();
         createUser.put("email", "usernametest@mail.com");

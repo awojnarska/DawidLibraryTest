@@ -2,6 +2,7 @@ package users;
 
 import com.gd.intern.dawidlibrarytest.util.CreateOrderDB;
 import com.gd.intern.dawidlibrarytest.util.CreateUserDB;
+import io.qameta.allure.Feature;
 import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -12,6 +13,7 @@ import static io.restassured.config.JsonConfig.jsonConfig;
 import static io.restassured.path.json.config.JsonPathConfig.NumberReturnType.DOUBLE;
 import static org.hamcrest.Matchers.equalTo;
 
+@Feature("List of user's favourite genres")
 public class FavouriteGenresTest {
 
     @BeforeClass
@@ -42,41 +44,19 @@ public class FavouriteGenresTest {
         };
     }
 
- /*   @DataProvider(name = "usernameWithGenres")
-    public Object[][] getFavouriteGenres() {
-        Map<String, Integer> ilyaGenres = new HashMap<>();
-        ilyaGenres.put("short stories collection", 1);
-        ilyaGenres.put("fantasy", 3);
-        ilyaGenres.put("novel", 2);
-
-        Map<String, Integer> dgabkaGenres = new HashMap<>();
-        dgabkaGenres.put("short story", 2);
-        dgabkaGenres.put("horror", 4);
-        dgabkaGenres.put("novel", 2);
-
-        Map<String, Integer> testgenresGenres = new HashMap<>();
-        testgenresGenres.put("short story", 1);
-        testgenresGenres.put("fantasy", 1);
-        testgenresGenres.put("horror", 1);
-        testgenresGenres.put("novel", 1);
-
-        return new Object[][]{{"ilya", ilyaGenres}, {"dgabka", dgabkaGenres},{"testgenres", testgenresGenres} };
-    }
-*/
-
-    @Test(dataProvider = "username")
+    @Test(dataProvider = "username", description = "Getting list of favourite genres - proper username")
     public void properUsernameTest(String username) {
         given().pathParam("username", username).when().get("http://localhost:8080/virtual-library-ws/users/{username}/favorites").then()
                 .statusCode(200);
     }
 
-    @Test(dataProvider = "wrongUsername")
+    @Test(dataProvider = "wrongUsername", description="Getting list of favourite genres - incorrect username")
     public void incorrectUsernameTest(String username) {
         given().pathParam("username", username).when().get("http://localhost:8080/virtual-library-ws/users/{username}/favorites").then()
                 .statusCode(404);
     }
 
-    @Test
+    @Test(description="Getting list of favourite genres of existing user")
     public void getFavouriteGenresTest_userIlya() {
         given().pathParam("username", "ilya").when().get("http://localhost:8080/virtual-library-ws/users/{username}/favorites").then()
                 .contentType("application/json")
@@ -86,7 +66,7 @@ public class FavouriteGenresTest {
                         "novel", equalTo(2));
     }
 
-    @Test
+    @Test(description="Getting list of favourite genres of existing user")
     public void getFavouriteGenresTest_userTestgenres() {
         given().pathParam("username", "testgenres").when().get("http://localhost:8080/virtual-library-ws/users/{username}/favorites").then()
                 .contentType("application/json")
