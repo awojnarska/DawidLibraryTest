@@ -34,6 +34,7 @@ public class GetBookByISBNTest {
     }
 
 
+    @Step("isbn: [0], fragment of title: [1]")
     @Test(dataProvider = "TitleByISBN", description = "Check status code and the correctness of title parameter")
     public void getBookByISBN_statusCodeTest(String isbn, String title) {
         given().pathParam("isbn", isbn).when().get("{isbn}")
@@ -42,7 +43,7 @@ public class GetBookByISBNTest {
                 .body("title", equalTo(title));
     }
 
-
+    @Step("isbn: [0]")
     @Test(dataProvider = "WrongParameters", description = "Check status code, when isbn not exist")
     public void getBookByISBN_wrongParam(String isbn) {
         given().pathParam("isbn", isbn).when().get("{isbn}").then().statusCode(404);

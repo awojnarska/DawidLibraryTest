@@ -3,6 +3,7 @@ package users;
 import com.gd.intern.dawidlibrarytest.model.User;
 import com.gd.intern.dawidlibrarytest.util.CreateUserDB;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Step;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -26,6 +27,7 @@ public class GetUserByIdTest {
     }
 
 
+    @Step("User id: [0], Username of user: [1]")
     @Test(dataProvider = "publicUserId", description = "Getting user by id - existing user")
     public void properPublicUserId(String id, String login) {
         given().pathParam("id", id).when().get("http://localhost:8080/virtual-library-ws/users/{id}").then()
@@ -50,6 +52,7 @@ public class GetUserByIdTest {
     }
 
 
+    @Step("User id: [0]")
     @Test(dataProvider = "incorrectPublicUserId", description = "Getting user by id - incorrect public user id")
     public void incorrectPublicUserId(String id) {
         given().pathParam("id", id).when().get("http://localhost:8080/virtual-library-ws/users/{id}").then()

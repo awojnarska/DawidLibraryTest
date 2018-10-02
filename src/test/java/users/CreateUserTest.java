@@ -3,7 +3,7 @@ package users;
 import com.gd.intern.dawidlibrarytest.model.User;
 import com.gd.intern.dawidlibrarytest.model.UserBasic;
 import io.qameta.allure.Feature;
-import io.qameta.allure.Story;
+import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -68,6 +68,7 @@ public class CreateUserTest {
     }
 
 
+    @Step("User to create [0]")
     @Test(dataProvider = "userData", description="Create user with correct data")
     public void createUser_test(User user) {
         given().contentType("application/json").body(user).when().post()
@@ -81,6 +82,7 @@ public class CreateUserTest {
                         "username", equalTo(user.getUsername()));
     }
 
+    @Step("User to create [0]")
     @Test(dataProvider = "userBasicData", description="Create user with correct data")
     public void createUser_test(UserBasic user) {
         given().contentType("application/json").body(user).when().post()
@@ -95,12 +97,14 @@ public class CreateUserTest {
     }
 
 
+    @Step("User to create [0]")
     @Test(dataProvider = "wrongBasicUserData", description="Create user with incorrect data")
     public void createUser_wrongUserData(UserBasic user) {
         given().contentType("application/json").body(user).when().post()
                 .then().statusCode(400);
     }
 
+    @Step("User to create [0]")
     @Test(dataProvider = "wrongUserData", description="Create user with incorrect data")
     public void createUser_wrongUserData(User user) {
         given().contentType("application/json").body(user).when().post()

@@ -4,6 +4,7 @@ import com.gd.intern.dawidlibrarytest.model.Order;
 import com.gd.intern.dawidlibrarytest.util.CreateOrderDB;
 import com.gd.intern.dawidlibrarytest.util.CreateUserDB;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -57,6 +58,7 @@ public class SaveReadingProgressTest {
     }
 
 
+    @Step("isbn of book: [0], username: [1], number of pages: [2]")
     @Test(dataProvider = "properData", description="Save reading progress with correct data")
     public void saveReadingProgress_correctPageNumber(String isbn, String username, int pages) {
         Order order = new Order(isbn, username);
@@ -69,6 +71,7 @@ public class SaveReadingProgressTest {
                 "readingProgress", closeTo((((double)pages/464)*100), 0.01d));
     }
 
+    @Step("isbn of book: [0], username: [1], number of pages: [2], expected status [3]")
     @Test(dataProvider = "incorrectData", description="Save reading progress with incorrect data")
     public void saveReadingProgress_incorrectData(String isbn, String username, int pages, int status) {
         Order order = new Order(isbn, username);

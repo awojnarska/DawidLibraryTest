@@ -2,6 +2,7 @@ package users;
 
 import com.gd.intern.dawidlibrarytest.util.CreateUserDB;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Step;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -67,17 +68,18 @@ public class UpdateUserDetailsTest {
 
         return new Object[][]{ //String id, String key, Object value
                 //update email exist
-                {CreateUserDB.createUserAndGetId("Test", "Update", "testupdate413456921@mail.com",
-                        "testupdate41346591", "RATHER_NOT_SAY", "password", 99, 3000.00),
+                {CreateUserDB.createUserAndGetId("Test", "Update", "testupdate4@mail.com",
+                        "testupdate4", "RATHER_NOT_SAY", "password", 99, 3000.00),
                         "email",
                         "ilya@email.com"},
                 //wrong age
-                {CreateUserDB.createUserAndGetId("Test", "Update", "testupdate7@mail.com",
-                        "testupdate7", "RATHER_NOT_SAY", "password", 99, 3000.00),
+                {CreateUserDB.createUserAndGetId("Test", "Update", "testupdate5@mail.com",
+                        "testupdate5", "RATHER_NOT_SAY", "password", 99, 3000.00),
                         "age", -99}
         };
     }
 
+    @Step("User id: [0], key to be update: [1], value to be update: [2]")
     @Test(dataProvider = "updateOneParameter", description = "Update user test - update one value")
     public void updateUserTest_updateOneParameter(String id, String key, Object value) {
         //update values
@@ -99,6 +101,7 @@ public class UpdateUserDetailsTest {
     }
 
 
+    @Step("User id: [0]")
     @Test(dataProvider = "wrongUserId", description = "Update user test - wrong id")
     public void updateUserTest_wrongId(String id) {
 

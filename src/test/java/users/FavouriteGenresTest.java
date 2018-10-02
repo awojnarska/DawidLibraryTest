@@ -3,6 +3,7 @@ package users;
 import com.gd.intern.dawidlibrarytest.util.CreateOrderDB;
 import com.gd.intern.dawidlibrarytest.util.CreateUserDB;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -44,12 +45,14 @@ public class FavouriteGenresTest {
         };
     }
 
+    @Step("Username of user: [0]")
     @Test(dataProvider = "username", description = "Getting list of favourite genres - proper username")
     public void properUsernameTest(String username) {
         given().pathParam("username", username).when().get("http://localhost:8080/virtual-library-ws/users/{username}/favorites").then()
                 .statusCode(200);
     }
 
+    @Step("Username of user: [0]")
     @Test(dataProvider = "wrongUsername", description="Getting list of favourite genres - incorrect username")
     public void incorrectUsernameTest(String username) {
         given().pathParam("username", username).when().get("http://localhost:8080/virtual-library-ws/users/{username}/favorites").then()

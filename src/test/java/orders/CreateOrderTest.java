@@ -3,6 +3,7 @@ package orders;
 import com.gd.intern.dawidlibrarytest.model.Order;
 import com.gd.intern.dawidlibrarytest.util.CreateUserDB;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -50,6 +51,7 @@ public class CreateOrderTest {
         };
     }
 
+    @Step("isbn: [0], username: [1], status: [2]")
     @Test(dataProvider = "postOrderIncorrect", description = "Check status code, when some parameters are wrong")
     public void postOrder_statusCodeIncorrect(String isbn, String username, int status) {
         given().contentType("application/json").body(new Order(isbn, username))
@@ -57,6 +59,7 @@ public class CreateOrderTest {
                 .then().statusCode(status);
     }
 
+    @Step("isbn: [0], username: [1], status: [2]")
     @Test(dataProvider = "postOrderCorrect", description = "Check status code with proper parameters")
     public void postOrder_CorrectValues(String isbn, String username, double price, int status) {
         given().contentType("application/json").body(new Order(isbn, username))
