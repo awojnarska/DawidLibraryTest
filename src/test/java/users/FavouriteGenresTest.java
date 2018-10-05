@@ -1,7 +1,7 @@
 package users;
 
-import com.gd.intern.dawidlibrarytest.util.CreateOrderDB;
-import com.gd.intern.dawidlibrarytest.util.CreateUserDB;
+import com.gd.intern.dawidlibrarytest.util.OrderService;
+import com.gd.intern.dawidlibrarytest.util.UserService;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
@@ -22,12 +22,12 @@ public class FavouriteGenresTest {
         RestAssured.config = RestAssured.config().jsonConfig(jsonConfig().numberReturnType(DOUBLE));
 
         //create users
-        CreateUserDB.createUser("Test", "Genres", "testgenres@meil.com",
+        UserService.createUser("Test", "Genres", "testgenres@meil.com",
                 "testgenres", "RATHER_NOT_SAY", "password", 20, 3000.00);
 
         //create orders
-        CreateOrderDB.createOrder("9781478965008", "testgenres");
-        CreateOrderDB.createOrder("9781974267767", "testgenres");
+        OrderService.createOrder("9781478965008", "testgenres");
+        OrderService.createOrder("9781974267767", "testgenres");
 
     }
 

@@ -1,6 +1,6 @@
 package users;
 
-import com.gd.intern.dawidlibrarytest.util.CreateUserDB;
+import com.gd.intern.dawidlibrarytest.util.UserService;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import org.testng.annotations.DataProvider;
@@ -9,17 +9,17 @@ import org.testng.annotations.Test;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.gd.intern.dawidlibrarytest.model.Gender.RATHER_NOT_SAY;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 @Feature("Update User Details")
 public class UpdateUserDetailsTest {
-
     @Test(description = "Update user test with proper values")
     public void updateUserTest() {
         //create user and get publicUserId
-        String id = CreateUserDB.createUserAndGetId("Test", "Update", "testupdate1@mail.com",
-                "testupdate1", "RATHER_NOT_SAY", "password", 99, 3000.00);
+        String id = UserService.createUserAndGetId("Test", "Update", "testupdate1@mail.com",
+                "testupdate1", RATHER_NOT_SAY, "password", 99, 3000.00);
 
 
         //update values
@@ -44,8 +44,8 @@ public class UpdateUserDetailsTest {
     public void updateUserTest_updateLastName() {
 
         //create user and get publicUserId
-        String id = CreateUserDB.createUserAndGetId("Test", "Update", "testupdate3@mail.com",
-                "testupdate3", "RATHER_NOT_SAY", "password", 99, 3000.00);
+        String id = UserService.createUserAndGetId("Test", "Update", "testupdate3@mail.com",
+                "testupdate3", RATHER_NOT_SAY, "password", 99, 3000.00);
 
         //update values
         Map<String, Object> userUpdate = new HashMap<>();
@@ -68,18 +68,18 @@ public class UpdateUserDetailsTest {
 
         return new Object[][]{ //String id, String key, Object value
                 //update email exist
-                {CreateUserDB.createUserAndGetId("Test", "Update", "testupdate4@mail.com",
-                        "testupdate4", "RATHER_NOT_SAY", "password", 99, 3000.00),
+                {UserService.createUserAndGetId("Test", "Update", "testupdate4@mail.com",
+                        "testupdate4", RATHER_NOT_SAY, "password", 99, 3000.00),
                         "email",
                         "ilya@email.com"},
                 //wrong age
-                {CreateUserDB.createUserAndGetId("Test", "Update", "testupdate5@mail.com",
-                        "testupdate5", "RATHER_NOT_SAY", "password", 99, 3000.00),
+                {UserService.createUserAndGetId("Test", "Update", "testupdate5@mail.com",
+                        "testupdate5", RATHER_NOT_SAY, "password", 99, 3000.00),
                         "age", -99}
         };
     }
 
-    @Step("User id: [0], key to be update: [1], value to be update: [2]")
+    @Step("UserDetailsRequestModel id: [0], key to be update: [1], value to be update: [2]")
     @Test(dataProvider = "updateOneParameter", description = "Update user test - update one value")
     public void updateUserTest_updateOneParameter(String id, String key, Object value) {
         //update values
@@ -101,7 +101,7 @@ public class UpdateUserDetailsTest {
     }
 
 
-    @Step("User id: [0]")
+    @Step("UserDetailsRequestModel id: [0]")
     @Test(dataProvider = "wrongUserId", description = "Update user test - wrong id")
     public void updateUserTest_wrongId(String id) {
 

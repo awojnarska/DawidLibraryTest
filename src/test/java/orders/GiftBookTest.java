@@ -1,8 +1,8 @@
 package orders;
 
 import com.gd.intern.dawidlibrarytest.model.Order;
-import com.gd.intern.dawidlibrarytest.util.CreateUserDB;
-import com.gd.intern.dawidlibrarytest.util.CreateOrderDB;
+import com.gd.intern.dawidlibrarytest.util.UserService;
+import com.gd.intern.dawidlibrarytest.util.OrderService;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
@@ -24,15 +24,15 @@ public class GiftBookTest {
         RestAssured.baseURI = "http://localhost:8080/virtual-library-ws/orders/gift";
 
         //create users
-        CreateUserDB.createUser("Test", "Order - Gift", "testordergift1@meil.com",
+        UserService.createUser("Test", "Order - Gift", "testordergift1@meil.com",
                 "testordergift1", "RATHER_NOT_SAY", "password", 99, 3000.00);
-        CreateUserDB.createUser("Test", "Order - Gift", "testordergift2@meil.com",
+        UserService.createUser("Test", "Order - Gift", "testordergift2@meil.com",
                 "testordergift2", "RATHER_NOT_SAY", "password", 99, 25.00);
 
         //create orders
-        CreateOrderDB.createOrder("9781478965008", "testordergift1");
-        CreateOrderDB.createOrder("9781974267767", "testordergift1");
-        CreateOrderDB.createOrder("9781974267767", "testordergift2");
+        OrderService.createOrder("9781478965008", "testordergift1");
+        OrderService.createOrder("9781974267767", "testordergift1");
+        OrderService.createOrder("9781974267767", "testordergift2");
 
     }
     @DataProvider(name = "giftBook")

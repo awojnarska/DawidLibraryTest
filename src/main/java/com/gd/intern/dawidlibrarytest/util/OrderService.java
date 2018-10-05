@@ -5,7 +5,7 @@ import io.qameta.allure.Step;
 
 import static io.restassured.RestAssured.given;
 
-public class CreateOrderDB {
+public class OrderService {
 
     @Step("Create new order to database")
     public static void createOrder(String isbn, String username) {

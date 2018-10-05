@@ -1,8 +1,8 @@
 package orders;
 
 import com.gd.intern.dawidlibrarytest.model.Order;
-import com.gd.intern.dawidlibrarytest.util.CreateOrderDB;
-import com.gd.intern.dawidlibrarytest.util.CreateUserDB;
+import com.gd.intern.dawidlibrarytest.util.OrderService;
+import com.gd.intern.dawidlibrarytest.util.UserService;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
@@ -26,12 +26,12 @@ public class SaveReadingProgressTest {
         RestAssured.config = RestAssured.config().jsonConfig(jsonConfig().numberReturnType(DOUBLE));
 
         //create users
-        CreateUserDB.createUser("Test", "Order - Read", "testorderread1@mail.com",
+        UserService.createUser("Test", "Order - Read", "testorderread1@mail.com",
                 "testorderread1", "RATHER_NOT_SAY", "password", 20, 3000.00);
 
         //create orders
-        CreateOrderDB.createOrder("9781478965008", "testorderread1");
-        CreateOrderDB.createOrder("9781974267767", "testorderread1");
+        OrderService.createOrder("9781478965008", "testorderread1");
+        OrderService.createOrder("9781974267767", "testorderread1");
     }
 
     @DataProvider(name = "properData")

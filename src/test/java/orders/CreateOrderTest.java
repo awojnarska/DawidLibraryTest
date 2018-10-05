@@ -1,7 +1,7 @@
 package orders;
 
 import com.gd.intern.dawidlibrarytest.model.Order;
-import com.gd.intern.dawidlibrarytest.util.CreateUserDB;
+import com.gd.intern.dawidlibrarytest.util.UserService;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
@@ -25,9 +25,9 @@ public class CreateOrderTest {
         RestAssured.config = RestAssured.config().jsonConfig(jsonConfig().numberReturnType(DOUBLE));
 
         //create users
-        CreateUserDB.createUser("Test", "Order", "testorder1@meil.com",
+        UserService.createUser("Test", "Order", "testorder1@meil.com",
                 "testorder1", "RATHER_NOT_SAY", "password", 99, 3000.00);
-        CreateUserDB.createUser("Test", "Order", "testorder2@meil.com",
+        UserService.createUser("Test", "Order", "testorder2@meil.com",
                 "testorder2", "RATHER_NOT_SAY", "password", 20, 10.00);
     }
 
