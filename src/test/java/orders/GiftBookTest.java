@@ -65,7 +65,7 @@ public class GiftBookTest {
         UserRest user2 = createUser("Test", "Order - Gift", "testordergift4@meil.com",
                 "testordergift4", RATHER_NOT_SAY, "password", 99, 3000.00);
         OrderRest order = createOrder("9781478965008", user1.getUsername());
-        OrderRest gift = giftBook(order.getBookRest().getIsbn(), user1.getUsername(), user2.getUsername(), new Order(order.getBookRest().getIsbn(), user1.getUsername()));
+        OrderRest gift = giftBook(order.getBookRest().getIsbn(), user1.getUsername(), user2.getUsername());
         orderAssertEquals(gift, gift.getBookRest(), user2);
 
     }

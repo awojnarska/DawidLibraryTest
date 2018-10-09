@@ -9,15 +9,11 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static com.gd.intern.dawidlibrarytest.model.Gender.RATHER_NOT_SAY;
-import static com.gd.intern.dawidlibrarytest.service.OrderService.createOrder;
-import static com.gd.intern.dawidlibrarytest.service.OrderService.saveReadingProgress;
-import static com.gd.intern.dawidlibrarytest.service.OrderService.saveReadingProgress_incorrectData;
+import static com.gd.intern.dawidlibrarytest.service.OrderService.*;
 import static com.gd.intern.dawidlibrarytest.service.UserService.createUser;
 import static io.restassured.config.JsonConfig.jsonConfig;
 import static io.restassured.path.json.config.JsonPathConfig.NumberReturnType.DOUBLE;
-import static org.hamcrest.Matchers.closeTo;
-
-import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 @Feature("Save reading progress")
 public class SaveReadingProgressTest {
@@ -65,7 +61,8 @@ public class SaveReadingProgressTest {
     @Test(dataProvider = "properData", description = "Save reading progress test  with correct data")
     public void testSaveReadingProgress_correctPageNumber(String isbn, String username, int pages) {
         OrderRest order = saveReadingProgress(isbn, username, pages);
-        assertEquals(order.getReadingProgress(), closeTo((((double) pages / order.getBookRest().getPages()) * 100), 0.01d));
+        double readPagesPercent = getReadPercent(pages, order.getBookRest().getPages());
+        assertTrue(order.getReadingProgress() <= readPagesPercent + 0.0001 && order.getReadingProgress() >= readPagesPercent - 0.0001);
     }
 
     @Test(dataProvider = "incorrectData", description = "Save reading progress with incorrect data")

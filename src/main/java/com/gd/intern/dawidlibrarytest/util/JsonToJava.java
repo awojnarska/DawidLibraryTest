@@ -13,7 +13,7 @@ public class JsonToJava {
 
     public static List<BookRest> getListOfBookFromJson(String filePath) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        List<BookRest> listBook = objectMapper.readValue(new File(filePath), new TypeReference<List<Book>>() {
+        List<BookRest> listBook = objectMapper.readValue(new File(filePath), new TypeReference<List<BookRest>>() {
         });
         return listBook;
     }

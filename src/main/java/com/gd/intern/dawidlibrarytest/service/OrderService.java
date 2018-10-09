@@ -32,7 +32,8 @@ public class OrderService {
     }
 
     @Step("Gift book to another User")
-    public static OrderRest giftBook(String isbn, String user1, String user2, Order gift) {
+    public static OrderRest giftBook(String isbn, String user1, String user2) {
+        Order gift = new Order(isbn, user1);
         return given().queryParam("to", user2).contentType("application/json").body(gift)
                 .when().post("orders/gift")
                 .then()
@@ -53,7 +54,7 @@ public class OrderService {
     public static OrderRest saveReadingProgress(String isbn, String username, int pages) {
         Order order = new Order(isbn, username);
         return given().queryParam("no", pages).contentType("application/json").body(order)
-                .when().put()
+                .when().put("orders/read")
                 .then()
                 .statusCode(200)
                 .contentType("application/json")
@@ -64,9 +65,14 @@ public class OrderService {
     public static void saveReadingProgress_incorrectData(String isbn, String username, int pages, int status) {
         Order order = new Order(isbn, username);
         given().queryParam("no", pages).contentType("application/json").body(order)
-                .when().put()
+                .when().put("orders/read")
                 .then()
                 .statusCode(status);
+    }
+
+    @Step("Get percent of read book")
+    public static double getReadPercent(int readPages, int bookPages) {
+        return ((double) readPages / bookPages) * 100;
     }
 
 
