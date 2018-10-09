@@ -1,10 +1,8 @@
 package orders;
 
-import com.gd.intern.dawidlibrarytest.model.Order;
-import com.gd.intern.dawidlibrarytest.model.OrderRest;
+import com.gd.intern.dawidlibrarytest.model.rest.OrderRest;
 
 import io.qameta.allure.Feature;
-import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;

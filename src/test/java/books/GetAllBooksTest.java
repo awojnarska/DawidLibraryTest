@@ -1,6 +1,6 @@
 package books;
 
-import com.gd.intern.dawidlibrarytest.model.BookRest;
+import com.gd.intern.dawidlibrarytest.model.rest.BookRest;
 import com.gd.intern.dawidlibrarytest.util.JsonToJava;
 import io.qameta.allure.Feature;
 import io.restassured.RestAssured;
@@ -25,7 +25,7 @@ public class GetAllBooksTest {
     }
 
     @DataProvider(name = "pageAndLimit")
-    public Object[] pageAndNumber() {
+    public Object[] dataPageAndNumber() {
         return new Object[][]{
                 {0, 8}, {0, 5}, {0, 2}, {1, 8}, {10, 3}, {2, 3}, {4, 3}
         };

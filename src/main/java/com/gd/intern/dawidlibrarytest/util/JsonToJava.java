@@ -3,7 +3,7 @@ package com.gd.intern.dawidlibrarytest.util;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gd.intern.dawidlibrarytest.model.Book;
-import com.gd.intern.dawidlibrarytest.model.BookRest;
+import com.gd.intern.dawidlibrarytest.model.rest.BookRest;
 
 import java.io.File;
 import java.io.IOException;

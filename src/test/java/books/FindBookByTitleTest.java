@@ -1,6 +1,6 @@
 package books;
 
-import com.gd.intern.dawidlibrarytest.model.BookRest;
+import com.gd.intern.dawidlibrarytest.model.rest.BookRest;
 import io.qameta.allure.Feature;
 import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
@@ -46,10 +46,9 @@ public class FindBookByTitleTest {
     }
 
 
-
     @Test(dataProvider = "incorrectFragmentOfTitle", description = "Count elements, when given fragment is not on the list")
     public void testFindBookByTitle_fragmentNotExist(String find) {
         List<BookRest> books = findBookByFragmentOfTitle(find);
-        assertTrue(books.size()==0);
+        assertTrue(books.size() == 0);
     }
 }

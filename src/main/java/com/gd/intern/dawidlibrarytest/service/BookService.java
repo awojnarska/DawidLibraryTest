@@ -1,7 +1,7 @@
 package com.gd.intern.dawidlibrarytest.service;
 
-import com.gd.intern.dawidlibrarytest.model.AuthorRest;
-import com.gd.intern.dawidlibrarytest.model.BookRest;
+import com.gd.intern.dawidlibrarytest.model.rest.AuthorRest;
+import com.gd.intern.dawidlibrarytest.model.rest.BookRest;
 import io.qameta.allure.Step;
 
 import java.util.ArrayList;

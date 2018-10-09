@@ -1,7 +1,6 @@
 package books;
 
-import com.gd.intern.dawidlibrarytest.model.Book;
-import com.gd.intern.dawidlibrarytest.model.BookRest;
+import com.gd.intern.dawidlibrarytest.model.rest.BookRest;
 import io.qameta.allure.Feature;
 import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
@@ -26,13 +25,13 @@ public class GetBookByISBNTest {
     }
 
     @DataProvider(name = "TitleByISBN")
-    public Object[] titleByISBN() throws IOException {
+    public Object[] dataTitleByISBN() throws IOException {
         List<BookRest> books = getListOfBookFromJson("books.json");
         return books.toArray(new BookRest[books.size()]);
     }
 
     @DataProvider(name = "WrongParameters")
-    public Object[] wrongParam() {
+    public Object[] dataWrongParam() {
         return new Object[]{"12345", "123", "abcdergh"};
     }
 

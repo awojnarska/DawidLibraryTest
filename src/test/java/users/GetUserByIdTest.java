@@ -1,7 +1,7 @@
 package users;
 
 import com.gd.intern.dawidlibrarytest.model.Gender;
-import com.gd.intern.dawidlibrarytest.model.UserRest;
+import com.gd.intern.dawidlibrarytest.model.rest.UserRest;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
@@ -23,7 +23,7 @@ public class GetUserByIdTest {
     }
 
     @DataProvider(name = "publicUserId")
-    public Object[][] publicUserId() {
+    public Object[][] dataPublicUserId() {
         return new Object[][]{
                 {"8CnHLxNh06ZfmtfPBoV1c6slRU0Dk3", "ilya"},
                 {"MmVhfTO044WdTacJWXbqWkHbuuwJxT", "dgabka"},
@@ -31,12 +31,12 @@ public class GetUserByIdTest {
     }
 
     @DataProvider(name = "incorrectPublicUserId")
-    public Object[] incorrectPublicUserId() {
+    public Object[] dataIncorrectPublicUserId() {
         return new Object[]{"8CnHLxNh06ZfmtfPBoV1cf6slahnjkl", "aaabavahbahjkjabjhadhjkashkasjh", "ghjhbacjhbcjsahcjajhcbacjsh"};
     }
 
     @DataProvider(name = "userData")
-    public Object[][] userData() {
+    public Object[][] dataUser() {
         return new Object[][]{
                 {"Test", "GetUser", "getuserbyid3@mail.com",
                         "getuserbyid3", RATHER_NOT_SAY, "password", 100, 3000.00},

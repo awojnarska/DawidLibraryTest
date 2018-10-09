@@ -1,4 +1,4 @@
-package com.gd.intern.dawidlibrarytest.model;
+package com.gd.intern.dawidlibrarytest.model.rest;
 
 import java.util.Objects;
 

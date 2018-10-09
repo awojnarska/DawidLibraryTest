@@ -1,4 +1,6 @@
-package com.gd.intern.dawidlibrarytest.model;
+package com.gd.intern.dawidlibrarytest.model.rest;
+
+import com.gd.intern.dawidlibrarytest.model.Gender;
 
 import java.util.Objects;
 

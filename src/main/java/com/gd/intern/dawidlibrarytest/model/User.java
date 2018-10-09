@@ -2,7 +2,7 @@ package com.gd.intern.dawidlibrarytest.model;
 
 import static com.gd.intern.dawidlibrarytest.model.Gender.RATHER_NOT_SAY;
 
-public class UserDetailsRequestModel {
+public class User {
 
 
     private String firstName;
@@ -14,7 +14,7 @@ public class UserDetailsRequestModel {
     private int age;
     private double accountBalance;
 
-    public UserDetailsRequestModel(String firstName, String lastName, String email, String username, Gender gender, String password, int age, double accountBalance) {
+    public User(String firstName, String lastName, String email, String username, Gender gender, String password, int age, double accountBalance) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -25,7 +25,7 @@ public class UserDetailsRequestModel {
         this.accountBalance = accountBalance;
     }
 
-    public UserDetailsRequestModel(String email, String username, String password) {
+    public User(String email, String username, String password) {
         this.email = email;
         this.username = username;
         this.password = password;
@@ -98,7 +98,7 @@ public class UserDetailsRequestModel {
 
     @Override
     public String toString() {
-        return "UserDetailsRequestModel{" +
+        return "User{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +

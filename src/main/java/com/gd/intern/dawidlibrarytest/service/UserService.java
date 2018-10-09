@@ -1,8 +1,8 @@
 package com.gd.intern.dawidlibrarytest.service;
 
 import com.gd.intern.dawidlibrarytest.model.Gender;
-import com.gd.intern.dawidlibrarytest.model.UserDetailsRequestModel;
-import com.gd.intern.dawidlibrarytest.model.UserRest;
+import com.gd.intern.dawidlibrarytest.model.User;
+import com.gd.intern.dawidlibrarytest.model.rest.UserRest;
 import io.qameta.allure.Step;
 
 import java.util.HashMap;
@@ -19,7 +19,7 @@ public abstract class UserService {
     @Step("Create new user")
     public static UserRest createUser(String firstName, String lastName, String email, String username, Gender gender, String password, int age, double accountBalance) {
 
-        UserDetailsRequestModel user = new UserDetailsRequestModel(firstName, lastName, email, username, gender, password, age, accountBalance);
+        User user = new User(firstName, lastName, email, username, gender, password, age, accountBalance);
         return given().contentType("application/json").body(user)
                 .when().post("users")
                 .then().statusCode(200)
@@ -30,7 +30,7 @@ public abstract class UserService {
     @Step("Create new user with basic data")
     public static UserRest createUserBasicData(String email, String username, String password) {
 
-        UserDetailsRequestModel user = new UserDetailsRequestModel(email, username, password);
+        User user = new User(email, username, password);
         return given().contentType("application/json").body(user)
                 .when().post("users")
                 .then()
@@ -55,7 +55,7 @@ public abstract class UserService {
     @Step("Try to create new user with incorrect data")
     public static void createUser_incorrectData(String firstName, String lastName, String email, String username, Gender gender, String password, int age, double accountBalance) {
 
-        UserDetailsRequestModel user = new UserDetailsRequestModel(firstName, lastName, email, username, gender, password, age, accountBalance);
+        User user = new User(firstName, lastName, email, username, gender, password, age, accountBalance);
         createUser_badRequest(user);
 
     }
@@ -63,7 +63,7 @@ public abstract class UserService {
     @Step("Try to create new user with incorrect basic data")
     public static void createUser_incorrectBasicData(String email, String username, String password) {
 
-        UserDetailsRequestModel user = new UserDetailsRequestModel(email, username, password);
+        User user = new User(email, username, password);
         createUser_badRequest(user);
 
     }
@@ -84,14 +84,6 @@ public abstract class UserService {
                 .then()
                 .statusCode(404);
 
-    }
-
-
-    @Step("Create new user to database and return his publicUserId")
-    public static String createUserAndGetId(String firstName, String lastName, String email, String username, Gender gender, String password, int age, double accountBalance) {
-
-        UserDetailsRequestModel user = new UserDetailsRequestModel(firstName, lastName, email, username, gender, password, age, accountBalance);
-        return given().contentType("application/json").body(user).when().post("users").jsonPath().get("publicUserId");
     }
 
 
@@ -124,6 +116,22 @@ public abstract class UserService {
         assertNull(user.getLastName());
         assertEquals(user.getUsername(), username);
     }
+
+    @Step("Update user")
+    public static UserRest updateUser( Map<String, Object> userUpdate, String id){
+        return given().contentType("application/json").body(userUpdate).pathParam("id", id)
+                .when().put("users/{id}")
+                .then().statusCode(200)
+                .extract().as(UserRest.class);
+    }
+
+    @Step("Update user - incorrect value")
+    public static void updateUser_incorrectValue( Map<String, Object> userUpdate, String id, int status){
+         given().contentType("application/json").body(userUpdate).pathParam("id", id)
+                .when().put("users/{id}")
+                .then().statusCode(status);
+    }
+
 
 
 }

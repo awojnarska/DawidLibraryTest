@@ -1,7 +1,7 @@
 package users;
 
 import com.gd.intern.dawidlibrarytest.model.Gender;
-import com.gd.intern.dawidlibrarytest.model.UserRest;
+import com.gd.intern.dawidlibrarytest.model.rest.UserRest;
 import io.qameta.allure.Feature;
 import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
@@ -23,14 +23,14 @@ public class CreateUserTest {
     }
 
     @DataProvider(name = "userData")
-    public Object[][] userData() {
+    public Object[][] dataUser() {
         return new Object[][]{
                 {"Test", "User", "usertest@mail.com", "usertest", FEMALE, "password", 10, 100.0},
         };
     }
 
     @DataProvider(name = "userBasicData")
-    public Object[][] userBasicData() {
+    public Object[][] dataUserBasic() {
         return new Object[][]{
                 {"usertest2@mail.com", "testuser", "password"}
         };
@@ -38,7 +38,7 @@ public class CreateUserTest {
 
 
     @DataProvider(name = "wrongBasicUserData")
-    public Object[][] userBasicData_wrongParameters() {
+    public Object[][] dataUserBasic_wrongParameters() {
         return new Object[][]{
                 {"usertest@mail.com", "usertest2", "password"}, //email exist
                 {"testwrongdata2@mail.com", "usertest", "password"}, //username exist
@@ -53,7 +53,7 @@ public class CreateUserTest {
     }
 
     @DataProvider(name = "wrongUserData")
-    public Object[][] wrongUserData() {
+    public Object[][] dataUser_wrongUserDetails() {
         return new Object[][]{
                 {"Testabahbabnabnabdbanmbfjhbfahjhabgjhbagjhbgjhgbjhagbhj", "User", "wronguserdatatest@mail.com", "usertestwrongdata", FEMALE, "password", 10, 100.0}, //firstName too long
                 {"User", "Testabahbabnabnabdbanmbfjhbfahjhabgjhbagjhbgjhgbjhagbhj", "wronguserdatatest2@mail.com", "usertestwrongdata2", FEMALE, "password", 10, 100.0}, //lastName too long
@@ -63,7 +63,7 @@ public class CreateUserTest {
     }
 
     @DataProvider(name = "oneParameterData")
-    public Object[][] oneParameterUserData() {
+    public Object[][] dataOneParameterUserDetails() {
         return new Object[][]{
                 {"username", "usernameTest"},
                 {"email", "usernametest@mail.com"}
