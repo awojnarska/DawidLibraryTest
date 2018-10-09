@@ -1,28 +1,16 @@
 package users;
 
-import com.gd.intern.dawidlibrarytest.util.OrderService;
-import com.gd.intern.dawidlibrarytest.util.UserService;
 import io.qameta.allure.Feature;
-import io.qameta.allure.Step;
-import io.restassured.RestAssured;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
-
-import static io.restassured.RestAssured.given;
-import static io.restassured.config.JsonConfig.jsonConfig;
-import static io.restassured.path.json.config.JsonPathConfig.NumberReturnType.DOUBLE;
-import static org.hamcrest.Matchers.equalTo;
 
 @Feature("List of user's favourite genres")
 public class FavouriteGenresTest {
 
-    @BeforeClass
+  /*  @BeforeClass
     public void setup() {
         RestAssured.config = RestAssured.config().jsonConfig(jsonConfig().numberReturnType(DOUBLE));
 
         //create users
-        UserService.createUser("Test", "Genres", "testgenres@meil.com",
+        createUser("Test", "Genres", "testgenres@meil.com",
                 "testgenres", "RATHER_NOT_SAY", "password", 20, 3000.00);
 
         //create orders
@@ -45,22 +33,20 @@ public class FavouriteGenresTest {
         };
     }
 
-    @Step("Username of user: [0]")
-    @Test(dataProvider = "username", description = "Getting list of favourite genres - proper username")
-    public void properUsernameTest(String username) {
+   *//* @Test(dataProvider = "username", description = "Getting list of favourite genres - proper username")
+    public void testFavouriteGenres_properUsername(String username) {
         given().pathParam("username", username).when().get("http://localhost:8080/virtual-library-ws/users/{username}/favorites").then()
                 .statusCode(200);
     }
-
-    @Step("Username of user: [0]")
+*//*
     @Test(dataProvider = "wrongUsername", description="Getting list of favourite genres - incorrect username")
-    public void incorrectUsernameTest(String username) {
+    public void testFavouriteGenres_incorrectUsername(String username) {
         given().pathParam("username", username).when().get("http://localhost:8080/virtual-library-ws/users/{username}/favorites").then()
                 .statusCode(404);
     }
 
     @Test(description="Getting list of favourite genres of existing user")
-    public void getFavouriteGenresTest_userIlya() {
+    public void testFavouriteGenres_userIlya() {
         given().pathParam("username", "ilya").when().get("http://localhost:8080/virtual-library-ws/users/{username}/favorites").then()
                 .contentType("application/json")
                 .statusCode(200)
@@ -70,7 +56,7 @@ public class FavouriteGenresTest {
     }
 
     @Test(description="Getting list of favourite genres of existing user")
-    public void getFavouriteGenresTest_userTestgenres() {
+    public void testFavouriteGenres_userTestgenres() {
         given().pathParam("username", "testgenres").when().get("http://localhost:8080/virtual-library-ws/users/{username}/favorites").then()
                 .contentType("application/json")
                 .statusCode(200)
@@ -80,5 +66,5 @@ public class FavouriteGenresTest {
                         "novel", equalTo(1));
     }
 
-
+*/
 }

@@ -9,7 +9,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static com.gd.intern.dawidlibrarytest.model.Gender.FEMALE;
-import static com.gd.intern.dawidlibrarytest.util.UserService.*;
+import static com.gd.intern.dawidlibrarytest.service.UserService.*;
 import static io.restassured.config.JsonConfig.jsonConfig;
 import static io.restassured.path.json.config.JsonPathConfig.NumberReturnType.DOUBLE;
 
@@ -25,7 +25,7 @@ public class CreateUserTest {
     @DataProvider(name = "userData")
     public Object[][] userData() {
         return new Object[][]{
-                {"Test", "UserDetailsRequestModel", "usertest1121@mail.com", "usertest121", FEMALE, "password", 10, 100.0},
+                {"Test", "User", "usertest@mail.com", "usertest", FEMALE, "password", 10, 100.0},
         };
     }
 
@@ -40,9 +40,9 @@ public class CreateUserTest {
     @DataProvider(name = "wrongBasicUserData")
     public Object[][] userBasicData_wrongParameters() {
         return new Object[][]{
-                {"dgbaka@email.com", "gabka", "password"}, //email exist
-                {"testwrongdata2@mail.com", "ilya", "password"}, //username exist
-                {"testwrongdata3@mail.com", "il", "password"}, //username short
+                {"usertest@mail.com", "usertest2", "password"}, //email exist
+                {"testwrongdata2@mail.com", "usertest", "password"}, //username exist
+                {"testwrongdata3@mail.com", "us", "password"}, //username short
                 {"testwrongdata4@mail.com", "ilaaawwertyuwertyuiolkjhgfxcvbnmnxncjsbvhjsdbjhbdsjbsdvhjbfvsdb", "password"}, //username long
                 {"testwrongdata4", "testmail", "password"}, //wrong mail
                 {"testwrongdata4.com", "testmail2", "password"}, //wrong mail
@@ -55,10 +55,10 @@ public class CreateUserTest {
     @DataProvider(name = "wrongUserData")
     public Object[][] wrongUserData() {
         return new Object[][]{
-                {"Testabahbabnabnabdbanmbfjhbfahjhabgjhbagjhbgjhgbjhagbhj", "UserDetailsRequestModel", "wronguserdatatest@mail.com", "usertestwrongdata", FEMALE, "password", 10, 100.0}, //firstName too long
-                {"UserDetailsRequestModel", "Testabahbabnabnabdbanmbfjhbfahjhabgjhbagjhbgjhgbjhagbhj", "wronguserdatatest2@mail.com", "usertestwrongdata2", FEMALE, "password", 10, 100.0}, //lastName too long
-                {"UserDetailsRequestModel", "Test", "wronguserdatatest4@mail.com", "usertestwrongdata3", FEMALE, "password", -10, 100.0}, //wrong age
-                {"UserDetailsRequestModel", "Test", "wronguserdatatest5@mail.com", "usertestwrongdata4", FEMALE, "password", 10, -100.0} //wrong accountBalance
+                {"Testabahbabnabnabdbanmbfjhbfahjhabgjhbagjhbgjhgbjhagbhj", "User", "wronguserdatatest@mail.com", "usertestwrongdata", FEMALE, "password", 10, 100.0}, //firstName too long
+                {"User", "Testabahbabnabnabdbanmbfjhbfahjhabgjhbagjhbgjhgbjhagbhj", "wronguserdatatest2@mail.com", "usertestwrongdata2", FEMALE, "password", 10, 100.0}, //lastName too long
+                {"User", "Test", "wronguserdatatest4@mail.com", "usertestwrongdata3", FEMALE, "password", -10, 100.0}, //wrong age
+                {"User", "Test", "wronguserdatatest5@mail.com", "usertestwrongdata4", FEMALE, "password", 10, -100.0} //wrong accountBalance
         };
     }
 

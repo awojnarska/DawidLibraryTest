@@ -1,6 +1,6 @@
 package users;
 
-import com.gd.intern.dawidlibrarytest.util.UserService;
+import com.gd.intern.dawidlibrarytest.service.UserService;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import org.testng.annotations.DataProvider;

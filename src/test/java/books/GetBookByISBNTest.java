@@ -1,6 +1,7 @@
 package books;
 
 import com.gd.intern.dawidlibrarytest.model.Book;
+import com.gd.intern.dawidlibrarytest.model.BookRest;
 import io.qameta.allure.Feature;
 import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
@@ -26,8 +27,8 @@ public class GetBookByISBNTest {
 
     @DataProvider(name = "TitleByISBN")
     public Object[] titleByISBN() throws IOException {
-        List<Book> books = getListOfBookFromJson("books.json");
-        return books.toArray(new Book[books.size()]);
+        List<BookRest> books = getListOfBookFromJson("books.json");
+        return books.toArray(new BookRest[books.size()]);
     }
 
     @DataProvider(name = "WrongParameters")
@@ -36,8 +37,8 @@ public class GetBookByISBNTest {
     }
 
     @Test(dataProvider = "TitleByISBN", description = "Check status code and the correctness of data")
-    public void testGetBookByISBN(Book book) {
-        Book newBook = getBookByISBN(book.getIsbn());
+    public void testGetBookByISBN(BookRest book) {
+        BookRest newBook = getBookByISBN(book.getIsbn());
         bookAssertEquals(newBook, book.getTitle(), book.getIsbn(), book.getPages(), book.getPrice(), book.getPublicationYear(), book.getAuthor());
     }
 

@@ -10,7 +10,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static com.gd.intern.dawidlibrarytest.model.Gender.RATHER_NOT_SAY;
-import static com.gd.intern.dawidlibrarytest.util.UserService.*;
+import static com.gd.intern.dawidlibrarytest.service.UserService.*;
 import static org.testng.Assert.assertEquals;
 
 @Feature("Get user by id")

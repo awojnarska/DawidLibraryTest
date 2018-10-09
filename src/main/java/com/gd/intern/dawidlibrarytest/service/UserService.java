@@ -1,4 +1,4 @@
-package com.gd.intern.dawidlibrarytest.util;
+package com.gd.intern.dawidlibrarytest.service;
 
 import com.gd.intern.dawidlibrarytest.model.Gender;
 import com.gd.intern.dawidlibrarytest.model.UserDetailsRequestModel;
@@ -11,6 +11,7 @@ import java.util.Map;
 import static com.gd.intern.dawidlibrarytest.model.Gender.RATHER_NOT_SAY;
 import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNull;
 
 
 public abstract class UserService {
@@ -118,9 +119,9 @@ public abstract class UserService {
         assertEquals(user.getAccountBalance(), 0.00);
         assertEquals(user.getAge(), 0);
         assertEquals(user.getEmail(), email);
-        assertEquals(user.getFirstName(), null);
+        assertNull(user.getFirstName());
         assertEquals(user.getGender(), RATHER_NOT_SAY);
-        assertEquals(user.getLastName(), null);
+        assertNull(user.getLastName());
         assertEquals(user.getUsername(), username);
     }
 

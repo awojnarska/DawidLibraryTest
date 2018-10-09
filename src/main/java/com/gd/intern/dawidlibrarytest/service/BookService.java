@@ -1,7 +1,7 @@
 package com.gd.intern.dawidlibrarytest.service;
 
-import com.gd.intern.dawidlibrarytest.model.Author;
-import com.gd.intern.dawidlibrarytest.model.Book;
+import com.gd.intern.dawidlibrarytest.model.AuthorRest;
+import com.gd.intern.dawidlibrarytest.model.BookRest;
 import io.qameta.allure.Step;
 
 import java.util.ArrayList;
@@ -15,27 +15,27 @@ import static org.testng.Assert.assertTrue;
 public class BookService {
 
     @Step("Get all books")
-    public static List<Book> findAllBooks() {
-        return new ArrayList<>(Arrays.asList(given().param("page", 0).param("limit", 10000)
+    public static List<BookRest> findAllBooks(int page, int limit) {
+        return new ArrayList<>(Arrays.asList(given().param("page", page).param("limit", limit)
                 .when().get("books")
                 .then()
-                .statusCode(200).contentType("application/json").extract().as(Book[].class)));
+                .statusCode(200).contentType("application/json").extract().as(BookRest[].class)));
     }
 
 
     @Step("Get Book by ISBN")
-    public static Book getBookByISBN(String isbn) {
+    public static BookRest getBookByISBN(String isbn) {
 
         return given().pathParam("isbn", isbn).when().get("books/{isbn}")
                 .then()
                 .statusCode(200)
                 .contentType("application/json")
-                .extract().as(Book.class);
+                .extract().as(BookRest.class);
 
     }
 
     @Step("Check if the book assert equals ")
-    public static void bookAssertEquals(Book book, String title, String isbn, int pages, double price, int publicationYear, Author author) {
+    public static void bookAssertEquals(BookRest book, String title, String isbn, int pages, double price, int publicationYear, AuthorRest author) {
         assertEquals(book.getTitle(), title);
         assertEquals(book.getIsbn(), isbn);
         assertEquals(book.getPages(), pages);
@@ -52,17 +52,17 @@ public class BookService {
     }
 
     @Step("Find Book by fragment of title")
-    public static List<Book> findBookByFragmentOfTitle(String title) {
+    public static List<BookRest> findBookByFragmentOfTitle(String title) {
         return new ArrayList<>(Arrays.asList(given().param("find", title).param("page", 0).param("limit", 1000)
                 .when().get("books/")
                 .then().statusCode(200)
                 .contentType("application/json")
-                .extract().as(Book[].class)));
+                .extract().as(BookRest[].class)));
     }
 
     @Step("Check if the fragment of title assert equals")
-    public static void titleAssertEquals(List<Book> books, String title) {
-        for (Book b : books) {
+    public static void titleAssertEquals(List<BookRest> books, String title) {
+        for (BookRest b : books) {
             assertTrue(b.getTitle().toUpperCase().contains(title.toUpperCase()));
         }
     }

@@ -1,5 +1,7 @@
 package com.gd.intern.dawidlibrarytest.model;
 
+import java.util.Objects;
+
 public class UserRest {
 
     private String publicUserId;
@@ -75,4 +77,38 @@ public class UserRest {
         this.accountBalance = accountBalance;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserRest userRest = (UserRest) o;
+        return age == userRest.age &&
+                Double.compare(userRest.accountBalance, accountBalance) == 0 &&
+                Objects.equals(publicUserId, userRest.publicUserId) &&
+                Objects.equals(username, userRest.username) &&
+                Objects.equals(firstName, userRest.firstName) &&
+                Objects.equals(lastName, userRest.lastName) &&
+                Objects.equals(email, userRest.email) &&
+                gender == userRest.gender;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(publicUserId, username, firstName, lastName, email, age, gender, accountBalance);
+    }
+
+    @Override
+    public String toString() {
+        return "UserRest{" +
+                "publicUserId='" + publicUserId + '\'' +
+                ", username='" + username + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", age=" + age +
+                ", gender=" + gender +
+                ", accountBalance=" + accountBalance +
+                '}';
+    }
 }
