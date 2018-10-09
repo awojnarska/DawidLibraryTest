@@ -20,33 +20,40 @@ import static io.restassured.RestAssured.given;
 @Feature("Gift Book")
 public class GiftBookTest {
 
+    private String bookIsbn = "9781478965008";
+    private String bookIsbn2 = "9781974267767";
+    private String username = "testordergift1";
+    private String username2 = "testordergift2";
+    private String email = "testordergift1@meil.com";
+    private String email2 = "testordergift2@meil.com";
+
 
     @BeforeClass
     public void setup() {
         RestAssured.baseURI = "http://localhost:8080/virtual-library-ws/";
 
         //create users
-        createUser("Test", "Order - Gift", "testordergift1@meil.com",
-                "testordergift1", RATHER_NOT_SAY, "password", 99, 3000.00);
-        createUser("Test", "Order - Gift", "testordergift2@meil.com",
-                "testordergift2", RATHER_NOT_SAY, "password", 99, 25.00);
+        createUser("Test", "Order - Gift", email,
+                username, RATHER_NOT_SAY, "password", 99, 3000.00);
+        createUser("Test", "Order - Gift", email2,
+                username2, RATHER_NOT_SAY, "password", 99, 25.00);
 
         //create orders
-        createOrder("9781478965008", "testordergift1");
-        createOrder("9781974267767", "testordergift1");
-        createOrder("9781974267767", "testordergift2");
+        createOrder(bookIsbn, username);
+        createOrder(bookIsbn2, username);
+        createOrder(bookIsbn2, username2);
 
     }
 
     @DataProvider(name = "giftBookIncorrect")
-    public Object[][] giftBookDataIncorrect() {
+    public Object[][] dataGiftBookIncorrect() {
         return new Object[][]{
-                {"9788375780741", "testordergift1", "testordergift2", 404}, //user who give don't have it
-                {"9781974267767", "testordergift1", "testordergift2", 400}, //user to be gifted have book
-                {"9781974267767", "testordergift2", "testordergift2", 400}, //give book to yourself
-                {"9781974267761", "testordergift2", "testordergift1", 404}, //book don't exist
-                {"978197426776111111", "testordergift2", "testordergift1", 400}, //ISBN too long
-                {"9781974267767", "testorderg", "testordergift1", 404}, //username don't exist
+                {"9788375780741", username, username2, 404}, //user who give don't have it
+                {bookIsbn2, username, username2, 400}, //user to be gifted have book
+                {bookIsbn2, username2, username2, 400}, //give book to yourself
+                {"9781974267761", username2, username, 404}, //book don't exist
+                {"978197426776111111", username2, username, 400}, //ISBN too long
+                {bookIsbn2, "testorderg", username, 404}, //username don't exist
         };
     }
 
@@ -57,9 +64,9 @@ public class GiftBookTest {
                 "testordergift3", RATHER_NOT_SAY, "password", 99, 3000.00);
         UserRest user2 = createUser("Test", "Order - Gift", "testordergift4@meil.com",
                 "testordergift4", RATHER_NOT_SAY, "password", 99, 3000.00);
-        OrderRest order = createOrder("9781478965008", "testordergift3");
-        OrderRest gift = giftBook(order.getBookRest().getIsbn(), user1.getUsername(), user2.getUsername(), new Order(order.getBookRest().getIsbn(), user2.getUsername()));
-        orderAssertEquals(order, order.getBookRest(), user2);
+        OrderRest order = createOrder("9781478965008", user1.getUsername());
+        OrderRest gift = giftBook(order.getBookRest().getIsbn(), user1.getUsername(), user2.getUsername(), new Order(order.getBookRest().getIsbn(), user1.getUsername()));
+        orderAssertEquals(gift, gift.getBookRest(), user2);
 
     }
 
@@ -73,7 +80,7 @@ public class GiftBookTest {
         Map<String, String> gift = new HashMap<>();
         gift.put("isbn", "9781974267767");
         given().queryParam("to", "testordergift2").contentType("application/json").body(gift)
-                .when().post()
+                .when().post("orders/gift")
                 .then().statusCode(400);
     }
 
@@ -82,7 +89,7 @@ public class GiftBookTest {
         Map<String, String> gift = new HashMap<>();
         gift.put("username", "testordergift2");
         given().queryParam("to", "testordergift2").contentType("application/json").body(gift)
-                .when().post()
+                .when().post("orders/gift")
                 .then().statusCode(400);
     }
 

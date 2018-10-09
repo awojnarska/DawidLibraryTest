@@ -32,7 +32,7 @@ public class OrderService {
     }
 
     @Step("Gift book to another User")
-    public static OrderRest giftBook(String isbn, String user1, String user2, Order gift){
+    public static OrderRest giftBook(String isbn, String user1, String user2, Order gift) {
         return given().queryParam("to", user2).contentType("application/json").body(gift)
                 .when().post("orders/gift")
                 .then()
@@ -41,11 +41,32 @@ public class OrderService {
                 .extract().as(OrderRest.class);
     }
 
+    @Step("Gift book to another User with incorrect values")
     public static void giftBook_incorrectValues(String isbn, String user1, String user2, int status) {
         Order gift = new Order(isbn, user1);
         given().queryParam("to", user2).contentType("application/json").body(gift)
                 .when().post("orders/gift")
                 .then().statusCode(status);
+    }
+
+    @Step("Save Reading Progress")
+    public static OrderRest saveReadingProgress(String isbn, String username, int pages) {
+        Order order = new Order(isbn, username);
+        return given().queryParam("no", pages).contentType("application/json").body(order)
+                .when().put()
+                .then()
+                .statusCode(200)
+                .contentType("application/json")
+                .extract().as(OrderRest.class);
+    }
+
+    @Step("Save reading progress with incorrect values")
+    public static void saveReadingProgress_incorrectData(String isbn, String username, int pages, int status) {
+        Order order = new Order(isbn, username);
+        given().queryParam("no", pages).contentType("application/json").body(order)
+                .when().put()
+                .then()
+                .statusCode(status);
     }
 
 
