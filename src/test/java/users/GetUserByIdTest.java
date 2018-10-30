@@ -4,13 +4,13 @@ import com.gd.intern.dawidlibrarytest.model.Gender;
 import com.gd.intern.dawidlibrarytest.model.rest.UserRest;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
-import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static com.gd.intern.dawidlibrarytest.model.Gender.RATHER_NOT_SAY;
 import static com.gd.intern.dawidlibrarytest.service.UserService.*;
+import static com.gd.intern.dawidlibrarytest.util.ConfigurationRestAssured.baseUri;
 import static org.testng.Assert.assertEquals;
 
 @Feature("Get user by id")
@@ -19,7 +19,7 @@ public class GetUserByIdTest {
     @Step("Determine baseURI")
     @BeforeClass
     public void setup() {
-        RestAssured.baseURI = "http://localhost:8080/virtual-library-ws/";
+        baseUri();
     }
 
     @DataProvider(name = "publicUserId")

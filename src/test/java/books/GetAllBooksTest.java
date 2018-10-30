@@ -1,9 +1,7 @@
 package books;
 
 import com.gd.intern.dawidlibrarytest.model.rest.BookRest;
-import com.gd.intern.dawidlibrarytest.util.JsonToJava;
 import io.qameta.allure.Feature;
-import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -12,6 +10,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.gd.intern.dawidlibrarytest.service.BookService.findAllBooks;
+import static com.gd.intern.dawidlibrarytest.util.ConfigurationRestAssured.baseUri;
 import static com.gd.intern.dawidlibrarytest.util.CountElementLimit.countElementsOnPage;
 import static com.gd.intern.dawidlibrarytest.util.JsonToJava.getListOfBookFromJson;
 import static org.testng.Assert.assertTrue;
@@ -22,7 +21,7 @@ public class GetAllBooksTest {
 
     @BeforeClass
     public void setup() {
-        RestAssured.baseURI = "http://localhost:8080/virtual-library-ws/";
+        baseUri();
     }
 
     @DataProvider(name = "pageAndLimit")

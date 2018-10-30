@@ -2,7 +2,6 @@ package books;
 
 import com.gd.intern.dawidlibrarytest.model.rest.BookRest;
 import io.qameta.allure.Feature;
-import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -13,6 +12,7 @@ import java.util.List;
 import static com.gd.intern.dawidlibrarytest.service.BookService.bookAssertEquals;
 import static com.gd.intern.dawidlibrarytest.service.BookService.bookNotFound;
 import static com.gd.intern.dawidlibrarytest.service.BookService.getBookByISBN;
+import static com.gd.intern.dawidlibrarytest.util.ConfigurationRestAssured.baseUri;
 import static com.gd.intern.dawidlibrarytest.util.JsonToJava.getListOfBookFromJson;
 
 @Feature("Get book by isbn")
@@ -20,8 +20,7 @@ public class GetBookByISBNTest {
 
     @BeforeClass
     public void setup() {
-        RestAssured.baseURI = "http://localhost:8080/virtual-library-ws/";
-
+        baseUri();
     }
 
     @DataProvider(name = "TitleByISBN")

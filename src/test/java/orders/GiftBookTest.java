@@ -1,10 +1,8 @@
 package orders;
 
-import com.gd.intern.dawidlibrarytest.model.Order;
 import com.gd.intern.dawidlibrarytest.model.rest.OrderRest;
 import com.gd.intern.dawidlibrarytest.model.rest.UserRest;
 import io.qameta.allure.Feature;
-import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -15,6 +13,7 @@ import java.util.Map;
 import static com.gd.intern.dawidlibrarytest.model.Gender.RATHER_NOT_SAY;
 import static com.gd.intern.dawidlibrarytest.service.OrderService.*;
 import static com.gd.intern.dawidlibrarytest.service.UserService.createUser;
+import static com.gd.intern.dawidlibrarytest.util.ConfigurationRestAssured.baseUri;
 import static io.restassured.RestAssured.given;
 
 @Feature("Gift Book")
@@ -30,8 +29,7 @@ public class GiftBookTest {
 
     @BeforeClass
     public void setup() {
-        RestAssured.baseURI = "http://localhost:8080/virtual-library-ws/";
-
+        baseUri();
         //create users
         createUser("Test", "Order - Gift", email,
                 username, RATHER_NOT_SAY, "password", 99, 3000.00);

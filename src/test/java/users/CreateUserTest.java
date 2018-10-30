@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 
 import static com.gd.intern.dawidlibrarytest.model.Gender.FEMALE;
 import static com.gd.intern.dawidlibrarytest.service.UserService.*;
+import static com.gd.intern.dawidlibrarytest.util.ConfigurationRestAssured.baseUri;
 import static io.restassured.config.JsonConfig.jsonConfig;
 import static io.restassured.path.json.config.JsonPathConfig.NumberReturnType.DOUBLE;
 
@@ -18,7 +19,7 @@ public class CreateUserTest {
 
     @BeforeClass
     public void setup() {
-        RestAssured.baseURI = "http://localhost:8080/virtual-library-ws/";
+        baseUri();
         RestAssured.config = RestAssured.config().jsonConfig(jsonConfig().numberReturnType(DOUBLE));
     }
 

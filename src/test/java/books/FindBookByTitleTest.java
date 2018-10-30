@@ -2,7 +2,6 @@ package books;
 
 import com.gd.intern.dawidlibrarytest.model.rest.BookRest;
 import io.qameta.allure.Feature;
-import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -11,6 +10,7 @@ import java.util.List;
 
 import static com.gd.intern.dawidlibrarytest.service.BookService.findBookByFragmentOfTitle;
 import static com.gd.intern.dawidlibrarytest.service.BookService.titleAssertEquals;
+import static com.gd.intern.dawidlibrarytest.util.ConfigurationRestAssured.baseUri;
 import static org.testng.Assert.assertTrue;
 
 
@@ -19,8 +19,7 @@ public class FindBookByTitleTest {
 
     @BeforeClass
     public void setup() {
-        RestAssured.baseURI = "http://localhost:8080/virtual-library-ws/";
-
+        baseUri();
     }
 
     @DataProvider(name = "properFragmentOfTitle")
