@@ -1,15 +1,44 @@
 package com.gd.intern.dawidlibrarytest.model;
 
+import static com.gd.intern.dawidlibrarytest.model.Gender.RATHER_NOT_SAY;
+
 public class User {
 
-    String firstName;
-    String lastName;
-    String email;
-    String username;
-    String gender;
-    String password;
-    int age;
-    double accountBalance;
+
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String username;
+    private Gender gender;
+    private String password;
+    private int age;
+    private double accountBalance;
+
+    public User(String firstName, String lastName, String email, String username, Gender gender, String password, int age, double accountBalance) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.username = username;
+        this.gender = gender;
+        this.password = password;
+        this.age = age;
+        this.accountBalance = accountBalance;
+    }
+
+    public User(String email, String username, String password) {
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.gender = RATHER_NOT_SAY;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -35,16 +64,12 @@ public class User {
         this.email = email;
     }
 
-    public String getUsername() {
-        return username;
+    public int getAge() {
+        return age;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getGender() {
-        return gender;
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public String getPassword() {
@@ -55,16 +80,12 @@ public class User {
         this.password = password;
     }
 
-    public void setGender(String gender) {
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
         this.gender = gender;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
     }
 
     public double getAccountBalance() {
@@ -75,27 +96,6 @@ public class User {
         this.accountBalance = accountBalance;
     }
 
-    public User(String firstName, String lastName, String email, String username, String gender, String password, int age, double accountBalance) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.username = username;
-        this.gender = gender;
-        this.password = password;
-        this.age = age;
-        this.accountBalance = accountBalance;
-    }
-
-    public User(String email, String username, String gender, String password) {
-        this.email = email;
-        this.username = username;
-        this.gender = gender;
-        this.password = password;
-    }
-
-    public User() {
-    }
-
     @Override
     public String toString() {
         return "User{" +
@@ -103,7 +103,7 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", username='" + username + '\'' +
-                ", gender='" + gender + '\'' +
+                ", gender=" + gender +
                 ", password='" + password + '\'' +
                 ", age=" + age +
                 ", accountBalance=" + accountBalance +

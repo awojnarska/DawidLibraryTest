@@ -215,7 +215,7 @@ paths:
         description: User object to be created
         required: true
         schema:
-          $ref: '#/definitions/UserDetailsRequestModel'
+          $ref: '#/definitions/User'
       responses:
         '200':
           description: Operation successful
@@ -268,7 +268,7 @@ paths:
         description: User object to be updated
         required: true
         schema:
-          $ref: '#/definitions/UserDetailsRequestModel'
+          $ref: '#/definitions/User'
       responses:
         '200':
           description: Operation successful
@@ -420,7 +420,7 @@ definitions:
         type: string
       username:
         type: string
-    title: UserDetailsRequestModel
+    title: User
   UserRest:
     type: object
     properties:
